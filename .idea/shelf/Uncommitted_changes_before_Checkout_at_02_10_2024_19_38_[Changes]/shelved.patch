@@ -1,0 +1,65 @@
+Index: app/src/main/java/com/example/myapplication/UIChatScreen.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport androidx.compose.foundation.layout.Row\r\nimport androidx.compose.foundation.layout.Spacer\r\nimport androidx.compose.foundation.layout.padding\r\nimport androidx.compose.material.icons.Icons\r\nimport androidx.compose.material.icons.automirrored.filled.ArrowBack\r\nimport androidx.compose.material.icons.automirrored.filled.Send\r\nimport androidx.compose.material.icons.filled.FavoriteBorder\r\nimport androidx.compose.material3.BottomAppBar\r\nimport androidx.compose.material3.Button\r\nimport androidx.compose.material3.ExperimentalMaterial3Api\r\nimport androidx.compose.material3.FloatingActionButton\r\nimport androidx.compose.material3.Icon\r\nimport androidx.compose.material3.IconButton\r\nimport androidx.compose.material3.Scaffold\r\nimport androidx.compose.material3.SnackbarHost\r\nimport androidx.compose.material3.SnackbarHostState\r\nimport androidx.compose.material3.Text\r\nimport androidx.compose.material3.TopAppBar\r\nimport androidx.compose.runtime.Composable\r\nimport androidx.compose.runtime.remember\r\nimport androidx.compose.runtime.rememberCoroutineScope\r\nimport androidx.compose.ui.Modifier\r\nimport androidx.compose.ui.tooling.preview.Preview\r\nimport androidx.compose.ui.unit.dp\r\nimport androidx.compose.ui.unit.sp\r\nimport androidx.navigation.NavController\r\nimport androidx.navigation.compose.rememberNavController\r\nimport kotlinx.coroutines.launch\r\n\r\n@OptIn(ExperimentalMaterial3Api::class)\r\n@Composable\r\nfun ChatScreen(navController: NavController, index: Int?){\r\n    val snackbarHostState = remember { SnackbarHostState() }\r\n    val scope = rememberCoroutineScope()\r\n    Scaffold (\r\n        snackbarHost = { SnackbarHost(snackbarHostState) },\r\n        floatingActionButton = {\r\n            FloatingActionButton(\r\n                content = {Icon(Icons.Filled.FavoriteBorder, contentDescription = \"Click me\")},\r\n                onClick = {\r\n                    scope.launch {\r\n                        snackbarHostState.showSnackbar(\"Hello :^)\")\r\n                    }\r\n                }\r\n            )\r\n        },\r\n        topBar = {\r\n            TopAppBar(\r\n                title= {Text(\"Chat number $index\", modifier = Modifier.padding(start = 50.dp)) },\r\n                navigationIcon={\r\n                    IconButton(onClick = {navController.popBackStack()})\r\n                    {\r\n                        Icon(\r\n                            Icons.AutoMirrored.Filled.ArrowBack,\r\n                            contentDescription = \"Go Back\"\r\n                        )\r\n                    }\r\n                }\r\n            )\r\n        },\r\n        bottomBar = {\r\n            BottomAppBar{\r\n                Row {\r\n                    Text(\r\n                        text = \"С прошедшем Анна Петровна!!!\",\r\n                        fontSize = 25.sp,\r\n                        modifier = Modifier.padding(start = 20.dp, top = 5.dp, end = 20.dp))\r\n                    Spacer(Modifier.weight(1f, true))\r\n                    Button({}) {\r\n                        Icon(\r\n                            Icons.AutoMirrored.Filled.Send,\r\n                            contentDescription = \"Send\"\r\n                        )\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    ) { paddingValues -> paddingValues\r\n    }\r\n}\r\n\r\n//@Preview\r\n//@Composable\r\n//private fun preview(){\r\n//    val navController = rememberNavController()\r\n//    ChatScreen(navController = navController, 0)\r\n//}
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/UIChatScreen.kt b/app/src/main/java/com/example/myapplication/UIChatScreen.kt
+--- a/app/src/main/java/com/example/myapplication/UIChatScreen.kt	
++++ b/app/src/main/java/com/example/myapplication/UIChatScreen.kt	
+@@ -31,14 +31,14 @@
+ 
+ @OptIn(ExperimentalMaterial3Api::class)
+ @Composable
+-fun ChatScreen(navController: NavController, index: Int?){
++fun ChatScreen(navController: NavController, index: Int?) {
+     val snackbarHostState = remember { SnackbarHostState() }
+     val scope = rememberCoroutineScope()
+-    Scaffold (
++    Scaffold(
+         snackbarHost = { SnackbarHost(snackbarHostState) },
+         floatingActionButton = {
+             FloatingActionButton(
+-                content = {Icon(Icons.Filled.FavoriteBorder, contentDescription = "Click me")},
++                content = { Icon(Icons.Filled.FavoriteBorder, contentDescription = "Click me") },
+                 onClick = {
+                     scope.launch {
+                         snackbarHostState.showSnackbar("Hello :^)")
+@@ -48,9 +48,9 @@
+         },
+         topBar = {
+             TopAppBar(
+-                title= {Text("Chat number $index", modifier = Modifier.padding(start = 50.dp)) },
+-                navigationIcon={
+-                    IconButton(onClick = {navController.popBackStack()})
++                title = { Text("Chat number $index", modifier = Modifier.padding(start = 50.dp)) },
++                navigationIcon = {
++                    IconButton(onClick = { navController.popBackStack() })
+                     {
+                         Icon(
+                             Icons.AutoMirrored.Filled.ArrowBack,
+@@ -61,12 +61,13 @@
+             )
+         },
+         bottomBar = {
+-            BottomAppBar{
++            BottomAppBar {
+                 Row {
+                     Text(
+                         text = "С прошедшем Анна Петровна!!!",
+                         fontSize = 25.sp,
+-                        modifier = Modifier.padding(start = 20.dp, top = 5.dp, end = 20.dp))
++                        modifier = Modifier.padding(start = 20.dp, top = 5.dp, end = 20.dp)
++                    )
+                     Spacer(Modifier.weight(1f, true))
+                     Button({}) {
+                         Icon(
+@@ -77,7 +78,8 @@
+                 }
+             }
+         }
+-    ) { paddingValues -> paddingValues
++    ) { paddingValues ->
++        paddingValues
+     }
+ }
+ 
