@@ -3,9 +3,11 @@ package com.example.myapplication.scenes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -40,8 +42,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainCard() {
     Column(
-        modifier = Modifier
-            .padding(5.dp),
+        modifier = Modifier.padding(5.dp),
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
@@ -59,7 +60,10 @@ fun MainCard() {
                 ) {
                     Text(
                         text = "20 Jun 2024 13:00",
-                        modifier = Modifier.padding(top = 8.dp, start = 8.dp),
+                        modifier = Modifier.padding(
+                            top = 8.dp,
+                            start = 8.dp
+                        ),
                         style = TextStyle(fontSize = 15.sp),
                         color = Color.White
                     )
@@ -67,7 +71,10 @@ fun MainCard() {
                         model = "https://cdn.weatherapi.com/weather/64x64/day/116.png",
                         contentDescription = "img2",
                         modifier = Modifier
-                            .padding(top = 8.dp, end = 8.dp)
+                            .padding(
+                                top = 8.dp,
+                                end = 8.dp
+                            )
                             .size(35.dp)
                     )
                 }
@@ -124,7 +131,6 @@ fun MainCard() {
 }
 
 
-
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun TabLayout() {
@@ -135,7 +141,10 @@ fun TabLayout() {
 
     Column(
         modifier = Modifier
-            .padding(start = 5.dp, end = 5.dp)
+            .padding(
+                start = 5.dp,
+                end = 5.dp
+            )
             .clip(RoundedCornerShape(5.dp))
     ) {
         TabRow(
@@ -166,8 +175,14 @@ fun TabLayout() {
             count = tabList.size,
             state = pagerState,
             modifier = Modifier.weight(1f)
-        ) {index ->
-
+        ) { index ->
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(15) {
+                    ListItem()
+                }
+            }
         }
     }
 }
