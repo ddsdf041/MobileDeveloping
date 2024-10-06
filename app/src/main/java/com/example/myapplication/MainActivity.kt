@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,7 +29,6 @@ const val API_KEY = ""
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
                 val daysList = remember {
@@ -63,7 +61,7 @@ class MainActivity : ComponentActivity() {
                 )
                 Column {
                     MainCard(currentDay)
-                    TabLayout(daysList)
+                    TabLayout(daysList, currentDay)
                 }
             }
         }
@@ -120,9 +118,11 @@ private fun getWeatherByDays(response: String): List<WeatherModel> {
                     .getJSONObject("condition")
                     .getString("icon"),
                 item.getJSONObject("day")
-                    .getString("maxtemp_c"),
+                    .getString("maxtemp_c")
+                    .toFloat().toInt().toString() + "°C",
                 item.getJSONObject("day")
-                    .getString("mintemp_c"),
+                    .getString("mintemp_c")
+                    .toFloat().toInt().toString() + "°C",
                 item.getJSONArray("hour").toString()
             )
         )
