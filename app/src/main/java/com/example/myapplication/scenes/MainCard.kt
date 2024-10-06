@@ -40,10 +40,8 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
-
-@Preview(showBackground = true)
 @Composable
-fun MainCard() {
+fun MainCard(currentDay: MutableState<WeatherModel>) {
     Column(
         modifier = Modifier.padding(5.dp),
     ) {
@@ -62,7 +60,7 @@ fun MainCard() {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "20 Jun 2024 13:00",
+                        text = currentDay.value.time,
                         modifier = Modifier.padding(
                             top = 8.dp,
                             start = 8.dp
@@ -71,7 +69,7 @@ fun MainCard() {
                         color = Color.White
                     )
                     AsyncImage(
-                        model = "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+                        model = "https:" + currentDay.value.icon,
                         contentDescription = "img2",
                         modifier = Modifier
                             .padding(
@@ -82,17 +80,17 @@ fun MainCard() {
                     )
                 }
                 Text(
-                    text = "Madrid",
+                    text = currentDay.value.city,
                     style = TextStyle(fontSize = 24.sp),
                     color = Color.White
                 )
                 Text(
-                    text = "23°C",
+                    text = currentDay.value.currentTemp.toFloat().toInt().toString() +"°C",
                     style = TextStyle(fontSize = 65.sp),
                     color = Color.White
                 )
                 Text(
-                    text = "Sunny",
+                    text = currentDay.value.condition,
                     style = TextStyle(fontSize = 16.sp),
                     color = Color.White
                 )
@@ -101,9 +99,7 @@ fun MainCard() {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     IconButton(
-                        onClick = {
-
-                        }
+                        onClick = {}
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_search),
@@ -112,14 +108,13 @@ fun MainCard() {
                         )
                     }
                     Text(
-                        text = "23°C/12°C",
+                        text = "${currentDay.value.maxTemp.toFloat().toInt()}°C/" +
+                                "${currentDay.value.minTemp.toFloat().toInt()}°C",
                         style = TextStyle(fontSize = 16.sp),
                         color = Color.White
                     )
                     IconButton(
-                        onClick = {
-
-                        }
+                        onClick = {}
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_sync),

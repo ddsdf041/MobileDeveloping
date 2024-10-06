@@ -52,13 +52,14 @@ fun ListItem(item: WeatherModel) {
             }
             Text(
                 text = item.currentTemp.ifEmpty {
-                    "${item.maxTemp}/${item.minTemp}"
+                    "${item.maxTemp.toFloat().toInt()}°C/" +
+                    "${item.minTemp.toFloat().toInt()}°C"
                 },
                 color = Color.White,
                 style = TextStyle(fontSize = 25.sp)
             )
             AsyncImage(
-                model = "https:${item.icon}",
+                model = "https:" + item.icon,
                 contentDescription = "img5",
                 modifier = Modifier
                     .padding(
