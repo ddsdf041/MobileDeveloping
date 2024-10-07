@@ -19,20 +19,25 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.myapplication.data.WeatherModel
+import com.example.myapplication.scenes.DialogSearch
 import com.example.myapplication.scenes.MainCard
 import com.example.myapplication.scenes.TabLayout
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import org.json.JSONObject
 
-const val API_KEY = ""
+const val API_KEY = "1bc852f12aed46a9a1d165600240610"
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MyApplicationTheme {
+
                 val daysList = remember {
                     mutableStateOf(listOf<WeatherModel>())
+                }
+                val dialogState = remember {
+                    mutableStateOf(false)
                 }
                 val currentDay = remember {
                     mutableStateOf(
@@ -48,7 +53,16 @@ class MainActivity : ComponentActivity() {
                         )
                     )
                 }
-                getData("Moscow", this, daysList, currentDay)
+
+                if (dialogState.value) DialogSearch(dialogState, onSubmit = {
+                    getData(
+                        it, this@MainActivity,
+                        daysList, currentDay
+                    )
+                })
+
+                getData("Коломна", this, daysList, currentDay)
+
                 Image(
                     painter = painterResource(
                         id = R.drawable.weather_bg
@@ -60,7 +74,16 @@ class MainActivity : ComponentActivity() {
                     contentScale = ContentScale.FillBounds
                 )
                 Column {
-                    MainCard(currentDay)
+                    MainCard(currentDay,
+                        onClickSync = {
+                            getData(
+                                "Коломна", this@MainActivity,
+                                daysList, currentDay
+                            )
+                        },
+                        onClickSearch = {
+                            dialogState.value = true
+                        })
                     TabLayout(daysList, currentDay)
                 }
             }
@@ -75,13 +98,14 @@ private fun getData(city: String, context: Context,
     val url = "https://api.weatherapi.com/v1/forecast.json" +
             "?key=$API_KEY" +
             "&q=$city" +
-            "&days=3&aqi=no&alerts=no"
+            "&days=3&aqi=no&alerts=no&lang=ru"
     val queue = Volley.newRequestQueue(context)
     val stringRequest = StringRequest(
         Request.Method.GET,
         url,
         { response ->
-            val list = getWeatherByDays(response)
+            val resp = String(response.toByteArray(Charsets.ISO_8859_1), Charsets.UTF_8)
+            val list = getWeatherByDays(resp)
             currentDay.value = list[0]
             daysList.value = list
             Log.d("MyLog", "Response $response")
