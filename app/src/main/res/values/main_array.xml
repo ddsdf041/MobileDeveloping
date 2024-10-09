@@ -7,4 +7,35 @@
         <item>Фрукты</item>
         <item>Овощи</item>
     </string-array>
+
+
+    <string-array name="mushrooms">
+        <item>Эноки|enoji_mushrooms.png</item>
+        <item>Тратомес разноцветный|tratemes_mushrooms.jpg</item>
+    </string-array>
+
+
+    <string-array name="medicinal_herbs">
+        <item>Лаванда|lavender_medicalherbs.jpg</item>
+        <item>Цикорий|chicory_medicalherbs.jpg</item>
+    </string-array>
+
+
+    <string-array name="trees">
+        <item>Сакура|sakura_trees.jpeg</item>
+        <item>Берёза|bereza_trees.jpg</item>
+    </string-array>
+
+
+    <string-array name="fruits">
+        <item>Мандарин|tangerine_fruits.jpg</item>
+        <item>Апельсин|orange_fruits.jpg</item>
+    </string-array>
+
+
+    <string-array name="vegetables">
+        <item>Огурец|cucumber_vegetables.jpg</item>
+        <item>Тыква|pumpkin_vegetables.jpg</item>
+    </string-array>
+
 </resources>

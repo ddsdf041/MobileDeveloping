@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.components
 
+import android.media.metrics.Event
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,9 +30,10 @@ import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.BGTransparent
 import com.example.myapplication.ui.theme.MainRed
+import com.example.myapplication.utils.DrawerEvents
 
 @Composable
-fun DrawerMenu() {
+fun DrawerMenu(onEvent: (DrawerEvents) -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(
@@ -45,7 +47,9 @@ fun DrawerMenu() {
             modifier = Modifier.fillMaxSize()
         ) {
             Header()
-            Body()
+            Body(){event ->
+                onEvent(event)
+            }
         }
     }
 }
@@ -87,7 +91,7 @@ fun Header() {
 }
 
 @Composable
-fun Body() {
+fun Body(onEvent: (DrawerEvents) -> Unit) {
     val list = stringArrayResource(id = R.array.drawer_list)
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         itemsIndexed(list) { index, title ->
@@ -102,7 +106,7 @@ fun Body() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-
+                            onEvent(DrawerEvents.OnItemClick(title, index))
                         }
                         .padding(10.dp)
                         .wrapContentWidth(),

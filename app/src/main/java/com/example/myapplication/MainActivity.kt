@@ -27,6 +27,8 @@ import androidx.compose.ui.graphics.Color
 import com.example.myapplication.ui.components.DrawerMenu
 import com.example.myapplication.ui.components.MainTopBar
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.myapplication.utils.DrawerEvents
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -39,10 +41,22 @@ class MainActivity : ComponentActivity() {
                 val topBarTitle = remember {
                     mutableStateOf("Грибы")
                 }
+                val scope = rememberCoroutineScope()
                 ModalNavigationDrawer(
                     drawerState = drawerState,
                     drawerContent = {
-                        ModalDrawerSheet { DrawerMenu() }
+                        ModalDrawerSheet {
+                            DrawerMenu(){ event ->
+                                when(event){
+                                    is DrawerEvents.OnItemClick ->{
+                                        topBarTitle.value = event.title
+                                    }
+                                }
+                                scope.launch {
+                                    drawerState.close()
+                                }
+                            }
+                        }
                     },
                 ) {
                     Scaffold(
